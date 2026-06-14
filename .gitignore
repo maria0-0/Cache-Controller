@@ -1,0 +1,9 @@
+# Verilog Simulation Outputs
+a.out
+*.vcd
+*.log
+sim/
+build/
+
+# macOS system files
+.DS_Store
