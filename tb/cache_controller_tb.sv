@@ -50,7 +50,9 @@ module cache_controller_tb;
 
    initial begin
       $dumpfile("cache_controller_tb.vcd");
-      $dumpvars;
+      $dumpvars(1, cache_controller_tb);
+      $dumpvars(1, cache_controller_tb.DUT_CACHE);
+      $dumpvars(1, cache_controller_tb.DUT_CACHE.cu);
    end
 
    always begin

@@ -34,6 +34,22 @@ module cache_cu (
    state_t current_state, next_state;
    assign current_state_out = current_state;
 
+   // Semnal adaugat special pentru debugging vizual in WaveTrace (setezi radix la ASCII)
+   reg [79:0] state_name;
+   always_comb begin
+      case(current_state)
+         STATE_IDLE:       state_name = "IDLE      ";
+         STATE_READ_HIT:   state_name = "READ_HIT  ";
+         STATE_READ_MISS:  state_name = "READ_MISS ";
+         STATE_WRITE_HIT:  state_name = "WRITE_HIT ";
+         STATE_WRITE_MISS: state_name = "WRITE_MISS";
+         STATE_REPLACE:    state_name = "REPLACE   ";
+         STATE_FETCH:      state_name = "FETCH     ";
+         STATE_FILL:       state_name = "FILL      ";
+         default:          state_name = "UNKNOWN   ";
+      endcase
+   end
+
    always_ff @(posedge clk) begin
        if (!rst_n) current_state <= STATE_IDLE;
        else current_state <= next_state;
