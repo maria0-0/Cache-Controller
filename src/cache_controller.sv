@@ -1,4 +1,4 @@
-`include "defs.svh"
+
 `timescale 1ns/1ps
 
 module cache_controller #(
@@ -33,7 +33,6 @@ module cache_controller #(
    localparam BLOCK_OFFSET_MSB  = 2;
    localparam BLOCK_OFFSET_LSB  = 0;
 
-   // Active signals based on state
    wire [2:0] current_state;
    wire is_idle = (current_state == 3'b000); // STATE_IDLE
    wire is_fill = (current_state == 3'b111); // STATE_FILL
@@ -59,7 +58,6 @@ module cache_controller #(
    wire [TAG_WIDTH - 1:0]     active_tag = active_addr[TAG_MSB:TAG_LSB];
    wire [OFFSET_WIDTH - 1:0]  active_offset = active_addr[BLOCK_OFFSET_MSB:BLOCK_OFFSET_LSB];
 
-   // Connections
    wire try_read, try_write, do_fill, do_write_hit, do_lru_update;
    wire [1:0] mem_hit_way, mem_evict_way;
    wire [BLOCK_SIZE-1:0] mem_data_out;
@@ -72,7 +70,6 @@ module cache_controller #(
    register #(.WIDTH(2)) reg_hit_way (.clk(clock), .rst_n(rst_n), .en(latch_way_en), .d(next_latched_hit_way), .q(latched_hit_way));
    register #(.WIDTH(2)) reg_evict_way (.clk(clock), .rst_n(rst_n), .en(latch_en), .d(mem_evict_way), .q(latched_evict_way));
 
-   // Which way to target during writes or data out
    wire [1:0] target_way = is_idle ? mem_hit_way : (is_fill || is_evict) ? latched_evict_way : latched_hit_way;
 
    cache_cu cu (

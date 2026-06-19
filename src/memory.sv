@@ -1,4 +1,4 @@
-`include "defs.svh"
+
 `timescale 1ns/1ps
 module memory
   #(parameter ADDRESS_WIDTH = 18,
